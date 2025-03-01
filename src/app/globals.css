@@ -22,3 +22,27 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+#output{
+  color: green;
+  font-weight: 1000;
+}
+
+.buttonStyle {
+  padding: 24px;
+  color: blue;
+}
+
+/* styles/globals.css */
+
+body {
+  font-family: var(--font-poppins), sans-serif; /* Use Poppins as default */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-geist-sans), sans-serif; /* Apply Geist font to headings */
+}
+
+pre, code {
+  font-family: var(--font-geist-mono), monospace; /* Apply Geist Mono font to code */
+}
