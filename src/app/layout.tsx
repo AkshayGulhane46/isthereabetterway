@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { Poppins, Geist, Geist_Mono } from "next/font/google";
+import { Poppins, Geist, Geist_Mono,Berkshire_Swash} from "next/font/google";
 import "./globals.css";
 
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -12,6 +12,15 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
 });
+
+// Import Google fonts using next/font/google
+const DM_Serif_Display = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-dm-serif",
+});
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
