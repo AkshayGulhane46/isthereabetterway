@@ -20,7 +20,16 @@ export default function Home() {
     return allowedKeywords.some(keyword => lowercasedInput.includes(keyword));
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setPrompt(suggestion); // Set the prompt to the suggestion
+    generateAnswer(); // Automatically generate the answer based on the suggestion
+    setTimeout(generateAnswer, 0);
+  };
+
   const generateAnswer = async (): Promise<void> => {
+    if(!prompt.trim()){
+      return;
+    }
     if (!isValidPrompt(prompt)) {
       setChat([...chat, { prompt, answer: "Hey I am here for help with your relationships 😄" }]);
       setPrompt(""); // Reset prompt
@@ -62,7 +71,7 @@ export default function Home() {
           clearInterval(typingInterval); // Stop typing when message is fully typed
           setLoading(false);
         }
-      }, 1000);
+      }, 100);
     } catch (error) {
       console.error("API Error:", error);
       setChat([...chat, { prompt, answer: "Failed to fetch response." }]);
@@ -103,6 +112,7 @@ export default function Home() {
             background: "linear-gradient(to right, #0894FF, #C959DD, #FF2E54, #FF9004)",
             WebkitBackgroundClip: "text",
             color: "transparent",
+            fontFamily:"poppins"
           }}
         >
           Ask Amica
@@ -110,13 +120,20 @@ export default function Home() {
 
         {/* Show suggested prompts if chat is empty */}
         {chat.length === 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            <div><h2>confused ? Start with these </h2></div>
+          <div className="flex flex-col flex-wrap gap-2 mb-4 text-sm">
+            <div><h2   style={{
+            background: "linear-gradient(to right, #0894FF, #C959DD, #0894FF, #FF9004)",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
+            fontWeight:500,
+            fontStyle:"italic"
+          }}>Confused ? Start with these insted, </h2></div>
             {suggestions.map((suggestion, index) => (
               <button
                 key={index}
-                className="px-4 py-2 rounded-lg bg-fuchsia-300  text-white text-left"
-                onClick={() => setPrompt(suggestion)}
+                className="px-4 py-2 rounded-lg bg-gray-300 opacity-70 text-black text-left text-sm"
+                //onClick={() => setPrompt(suggestion)}
+                onClick={()=>handleSuggestionClick(suggestion)}
               >
                 {suggestion}
               </button>
@@ -132,12 +149,25 @@ export default function Home() {
           {chat.map((item, index) => (
             <div key={index} className="mb-4">
               <div className="text-right">
-                <p className="text-black-600 font-normal bg-rose-300 dark:bg-rose-700 p-2 rounded-lg inline-block max-w-[75%]">
+                <p className="text-black-600 text-sm font-normal bg-rose-300 dark:text-black  p-2 rounded-lg inline-block max-w-[75%]"
+                
+                style={{
+                background: "linear-gradient(to right, #0894FF, #C959DD, #0894FF, #FF9004)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                border:"1px dashed oklch(0.81 0.117 11.638)"
+                 }}>
                   {item.prompt}
                 </p>
               </div>
               <div className="text-left mt-2">
-                <p className="text-gray-700 font-medium bg-fuchsia-300 dark:bg-fuchsia-700 dark:text-white p-2 rounded-lg inline-block max-w-[75%]">
+                <p className="text-gray-700 text-sm font-medium bg-fuchsia-300  dark:text-black p-2 rounded-lg inline-block max-w-[75%]"
+                 style={{
+                  WebkitBackgroundClip: "text",
+                  color: "#C959DD",
+                  border:"1px solid oklch(0.833 0.145 321.434)"
+                  
+                   }}>
                   {item.answer || " "}
                 </p>
               </div>
@@ -147,13 +177,17 @@ export default function Home() {
 
         {/* Input section */}
         <div className="flex items-center space-x-2 w-full p-4 bg-white dark:bg-gray-800 fixed bottom-0 left-0">
-          <input
+        <input
             type="text"
-            className="border-2 border-transparent bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="border-2 border-transparent bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            bg-clip-padding focus:outline-none focus:border-2 focus:border-transparent"
             placeholder="Ask Anything..."
             value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
             required
+            style={{
+              borderImage: "linear-gradient(to right, #ff7e5f, #feb47b, #6a11cb) 1",
+            }}
           />
           <button
             type="button"
