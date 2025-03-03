@@ -46,3 +46,18 @@ h2, h3, h4, h5, h6 {
 pre, code {
   font-family: var(--font-geist-mono), monospace; /* Apply Geist Mono font to code */
 }
+
+x/* In your global styles or a relevant CSS file */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

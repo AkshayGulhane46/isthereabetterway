@@ -104,7 +104,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen min-w-screen flex items-center justify-center dark:bg-gray-800 p-4 sm:p-6 md:p-3">
+    <div className="min-h-screen min-w-screen flex items-center justify-center dark:bg-gray-800 p-4 sm:p-6 md:p-3 overscroll-none">
       <div className="p-6 dark:bg-gray-800 rounded-lg w-[90vw] flex flex-col h-[90vh]">
         <h1
           className="text-3xl sm:text-3xl font-bold mb-4 text-center z-10"
@@ -126,7 +126,7 @@ export default function Home() {
             WebkitBackgroundClip: "text",
             color: "transparent",
             fontWeight:500,
-            fontStyle:"italic"
+            fontStyle:"italic",
           }}>Confused ? Start with these insted, </h2></div>
             {suggestions.map((suggestion, index) => (
               <button
@@ -176,16 +176,22 @@ export default function Home() {
         </div>
 
         {/* Input section */}
-        <div className="flex items-center space-x-2 w-full p-4 bg-white dark:bg-gray-800 fixed bottom-0 left-0">
+        <div className="flex items-center space-x-2 w-full p-4 bg-white dark:bg-gray-800 fixed bottom-0 left-0"
+        style={{
+          borderTop: "1px solid #ffe1da"
+          
+        }}
+       >
         <input
             type="text"
-            className="border-2 border-transparent bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-            bg-clip-padding focus:outline-none focus:border-2 focus:border-transparent"
+            className="border-2 border-transparent bg-gray-50 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+            bg-clip-padding focus:outline-none focus:border-2 focus:border-transparent animate-pulse"
             placeholder="Ask Anything..."
             value={prompt}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
             required
             style={{
+              borderWidth:0.7,
               borderImage: "linear-gradient(to right, #ff7e5f, #feb47b, #6a11cb) 1",
             }}
           />
@@ -198,7 +204,7 @@ export default function Home() {
             {loading ? (
               <svg
                 aria-hidden="true"
-                className="w-8 h-8 text-gray-200 animate-spin fill-fuchsia-300"
+                className="w-8 h-8 text-black animate-spin fill-fuchsia-300"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
