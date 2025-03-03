@@ -185,7 +185,7 @@ export default function Home() {
         <input
             type="text"
             className="border-2 border-transparent bg-gray-50 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-            bg-clip-padding focus:outline-none focus:border-2 focus:border-transparent animate-pulse"
+            bg-clip-padding focus:outline-none focus:border-2 focus:border-transparent"
             placeholder="Ask Anything..."
             value={prompt}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
