@@ -44,7 +44,12 @@ export default function Home() {
     "energy protection", "safe distance", "self-prioritization", "respect my space", 
     "headspace", "vibe check", "no-drama zone", "low-energy days", "protect your peace"
 ];
-
+const formatResponse = (text: string): string => {
+  return text
+    .replace(/\n/g, "<br />") // Preserve line breaks
+    .replace(/•\s/g, "🔹 ") // Replace bullet points
+    .replace(/(\d+)\.\s/g, "<strong>$1.</strong> "); // Bold numbered lists
+};
 
   const isValidPrompt = (input: string): boolean => {
     const lowercasedInput = input.toLowerCase();
@@ -58,6 +63,7 @@ export default function Home() {
   };
 
   const generateAnswer = async (): Promise<void> => {
+
     if(!prompt.trim()){
       return;
     }
@@ -75,6 +81,7 @@ export default function Home() {
       const chatResponse = await client.chat.complete({
         model: "mistral-tiny",
         messages: [{ role: "user", content: prompt }],
+        
       });
 
       let content = "No response received from the AI.";
@@ -83,8 +90,10 @@ export default function Home() {
           ? chatResponse.choices[0].message.content
           : "Invalid response received.";
       }
+      console.log(chatResponse);
+      //setChat([...chat, { prompt, answer: "" }]);
+      setChat([...chat, { prompt, answer: formatResponse(content) }]);
 
-      setChat([...chat, { prompt, answer: "" }]);
       setPrompt(""); // Reset prompt
 
       const words = content.split(" ");
@@ -95,6 +104,7 @@ export default function Home() {
           const latestIndex = updatedChat.length - 1;
           updatedChat[latestIndex].answer = words.slice(0, index + 1).join(" ");
           return updatedChat;
+
         });
 
         index++;
@@ -108,6 +118,7 @@ export default function Home() {
       setChat([...chat, { prompt, answer: "Failed to fetch response." }]);
       setPrompt("");
       setLoading(false);
+     
     }
   };
 
@@ -135,8 +146,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen min-w-screen flex items-center justify-center dark:bg-gray-800 p-4 sm:p-6 md:p-3 overscroll-none">
-      <div className="p-6 dark:bg-gray-800 rounded-lg w-[90vw] flex flex-col h-[90vh]">
+    <div className="min-h-screen min-w-screen flex items-center justify-center p-4 sm:p-6 md:p-3 overscroll-none dark:bg-white">
+      <div className="p-6 rounded-lg w-[90vw] flex flex-col h-[90vh]">
         <h1
           className="text-3xl sm:text-3xl font-bold mb-4 text-center z-10"
           style={{
@@ -174,13 +185,13 @@ export default function Home() {
 
         {/* Chat container with scrollable area */}
         <div
-          className="flex-grow overflow-y-auto dark:bg-gray-800 rounded-lg mb-12"
+          className="flex-grow overflow-y-auto rounded-lg mb-12"
           ref={chatContainerRef}
         >
           {chat.map((item, index) => (
             <div key={index} className="mb-4">
               <div className="text-right">
-                <p className="text-black-600 text-sm font-normal bg-rose-300 dark:text-black  p-2 rounded-lg inline-block max-w-[75%]"
+                <p className="text-black-600 text-sm font-normal bg-rose-300  p-2 rounded-lg inline-block max-w-[75%]"
                 
                 style={{
                 background: "linear-gradient(to right, #0894FF, #C959DD, #0894FF, #FF9004)",
@@ -192,14 +203,14 @@ export default function Home() {
                 </p>
               </div>
               <div className="text-left mt-2">
-                <p className="text-gray-700 text-sm font-medium bg-fuchsia-300  dark:text-black p-2 rounded-lg inline-block max-w-[75%]"
+                <p className="text-gray-700 text-sm font-medium bg-fuchsia-300  p-2 rounded-lg inline-block max-w-[75%]"
                  style={{
                   WebkitBackgroundClip: "text",
                   color: "#C959DD",
                   border:"1px solid oklch(0.833 0.145 321.434)"
                   
                    }}>
-                  {item.answer || " "}
+                  <span dangerouslySetInnerHTML={{ __html: item.answer }} />
                 </p>
               </div>
             </div>
@@ -207,7 +218,7 @@ export default function Home() {
         </div>
 
         {/* Input section */}
-        <div className="flex items-center space-x-2 w-full p-4 bg-white dark:bg-gray-800 fixed bottom-0 left-0"
+        <div className="flex items-center space-x-2 w-full p-4 bg-white fixed bottom-0 left-0"
         style={{
           borderTop: "1px solid #ffe1da"
           
@@ -229,7 +240,7 @@ export default function Home() {
           <button
             type="button"
             onClick={generateAnswer}
-            className="text-white bg-black focus:ring-4 focus:outline-none focus:ring-fuchsia-300 font-light rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white bg-black focus:ring-4 focus:outline-none focus:ring-fuchsia-300 font-light rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 :bg-blue-600"
             disabled={loading}
           >
             {loading ? (
