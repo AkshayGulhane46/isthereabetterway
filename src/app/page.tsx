@@ -10,50 +10,11 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false); // Loading state for button
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const allowedKeywords = [
-    // Relationships & Personal Growth
-    "relationship", "love", "personal growth", "self-improvement", "emotional health", 
-    "communication", "boundaries", "dating", "intimacy", "growth", "self-love", "trust",
-    "self-awareness", "mindfulness", "healing", "vulnerability", "connection", 
-    "compassion", "confidence", "inner peace", "emotional intelligence", "forgiveness", 
-    "authenticity", "resilience", "self-care", "empathy", "gratitude", "well-being", 
-    "happiness", "self-acceptance", "maturity", "understanding", "respect", "partnership",
-    "commitment", "self-worth", "wisdom", "balance", "emotional support", "patience",
-    "inner strength", "self-discovery", "emotional resilience",
-
-    // Slang & Casual Terms
-    "glow up", "self-love era", "soft life", "main character energy", "good vibes", 
-    "soul tie", "situationship", "high-value", "self-worth flex", "toxic-free", "boundaries game strong", 
-    "secure attachment", "red flags", "green flags", "ghosting", "breadcrumbing", "lowkey healing",
-    "inner work", "self-care queen", "protect your peace", "energy shift", "emotional glow-up",
-    "love language", "ride or die", "soulmate vibes", "heart check", "inner child work",
-    "shadow work", "healing era", "protect your energy", "safe space", "real talk",
-    "self-worth era", "relationship goals", "boss up", "level up", "stay grounded",
-
-    // Sex & Intimacy
-    "sexual health", "chemistry", "physical touch", "desire", "passion", "sensuality",
-    "pleasure", "intimate connection", "sexual compatibility", "consent", "libido", 
-    "foreplay", "aftercare", "sexual boundaries", "body positivity", "erotic energy",
-    "spicy", "bedroom vibes", "heat", "turn-on", "PDA", "cuddle chemistry", "sexual empowerment",
-    "slow burn", "fast-paced romance", "seduction", "tease", "fire", "wild side", "thirst trap", 
-    "sexual confidence", "mutual pleasure", "healthy sex life", "kink-friendly", "spontaneity",
-
-    // Personal Space & Boundaries
-    "personal space", "alone time", "solitude", "self-reflection", "privacy", 
-    "independence", "emotional space", "mental clarity", "breathing room", "autonomy", 
-    "energy protection", "safe distance", "self-prioritization", "respect my space", 
-    "headspace", "vibe check", "no-drama zone", "low-energy days", "protect your peace"
-];
-const formatResponse = (text: string): string => {
-  return text
-    .replace(/\n/g, "<br />") // Preserve line breaks
-    .replace(/•\s/g, "🔹 ") // Replace bullet points
-    .replace(/(\d+)\.\s/g, "<strong>$1.</strong> "); // Bold numbered lists
-};
-
-  const isValidPrompt = (input: string): boolean => {
-    const lowercasedInput = input.toLowerCase();
-    return allowedKeywords.some(keyword => lowercasedInput.includes(keyword));
+  const formatResponse = (text: string): string => {
+    return text
+      .replace(/\n/g, "<br />") // Preserve line breaks
+      .replace(/•\s/g, "🔹 ") // Replace bullet points
+      .replace(/(\d+)\.\s/g, "<strong>$1.</strong> "); // Bold numbered lists
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -63,13 +24,7 @@ const formatResponse = (text: string): string => {
   };
 
   const generateAnswer = async (): Promise<void> => {
-
-    if(!prompt.trim()){
-      return;
-    }
-    if (!isValidPrompt(prompt)) {
-      setChat([...chat, { prompt, answer: "Hey I am here for help with your relationships 😄" }]);
-      setPrompt(""); // Reset prompt
+    if (!prompt.trim()) {
       return;
     }
 
@@ -81,7 +36,6 @@ const formatResponse = (text: string): string => {
       const chatResponse = await client.chat.complete({
         model: "mistral-tiny",
         messages: [{ role: "user", content: prompt }],
-        
       });
 
       let content = "No response received from the AI.";
@@ -91,7 +45,6 @@ const formatResponse = (text: string): string => {
           : "Invalid response received.";
       }
       console.log(chatResponse);
-      //setChat([...chat, { prompt, answer: "" }]);
       setChat([...chat, { prompt, answer: formatResponse(content) }]);
 
       setPrompt(""); // Reset prompt
@@ -104,7 +57,6 @@ const formatResponse = (text: string): string => {
           const latestIndex = updatedChat.length - 1;
           updatedChat[latestIndex].answer = words.slice(0, index + 1).join(" ");
           return updatedChat;
-
         });
 
         index++;
@@ -118,7 +70,6 @@ const formatResponse = (text: string): string => {
       setChat([...chat, { prompt, answer: "Failed to fetch response." }]);
       setPrompt("");
       setLoading(false);
-     
     }
   };
 
@@ -174,7 +125,6 @@ const formatResponse = (text: string): string => {
               <button
                 key={index}
                 className="px-4 py-2 rounded-lg bg-gray-300 opacity-70 text-black text-left text-sm"
-                //onClick={() => setPrompt(suggestion)}
                 onClick={()=>handleSuggestionClick(suggestion)}
               >
                 {suggestion}
@@ -252,11 +202,11 @@ const formatResponse = (text: string): string => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 [...]
                   fill="currentColor"
                 />
                 <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 [...]
                   fill="currentFill"
                 />
               </svg>
