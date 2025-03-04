@@ -11,9 +11,40 @@ export default function Home() {
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
   const allowedKeywords = [
+    // Relationships & Personal Growth
     "relationship", "love", "personal growth", "self-improvement", "emotional health", 
-    "communication", "boundaries", "dating", "intimacy", "growth", "self-love", "trust"
-  ];
+    "communication", "boundaries", "dating", "intimacy", "growth", "self-love", "trust",
+    "self-awareness", "mindfulness", "healing", "vulnerability", "connection", 
+    "compassion", "confidence", "inner peace", "emotional intelligence", "forgiveness", 
+    "authenticity", "resilience", "self-care", "empathy", "gratitude", "well-being", 
+    "happiness", "self-acceptance", "maturity", "understanding", "respect", "partnership",
+    "commitment", "self-worth", "wisdom", "balance", "emotional support", "patience",
+    "inner strength", "self-discovery", "emotional resilience",
+
+    // Slang & Casual Terms
+    "glow up", "self-love era", "soft life", "main character energy", "good vibes", 
+    "soul tie", "situationship", "high-value", "self-worth flex", "toxic-free", "boundaries game strong", 
+    "secure attachment", "red flags", "green flags", "ghosting", "breadcrumbing", "lowkey healing",
+    "inner work", "self-care queen", "protect your peace", "energy shift", "emotional glow-up",
+    "love language", "ride or die", "soulmate vibes", "heart check", "inner child work",
+    "shadow work", "healing era", "protect your energy", "safe space", "real talk",
+    "self-worth era", "relationship goals", "boss up", "level up", "stay grounded",
+
+    // Sex & Intimacy
+    "sexual health", "chemistry", "physical touch", "desire", "passion", "sensuality",
+    "pleasure", "intimate connection", "sexual compatibility", "consent", "libido", 
+    "foreplay", "aftercare", "sexual boundaries", "body positivity", "erotic energy",
+    "spicy", "bedroom vibes", "heat", "turn-on", "PDA", "cuddle chemistry", "sexual empowerment",
+    "slow burn", "fast-paced romance", "seduction", "tease", "fire", "wild side", "thirst trap", 
+    "sexual confidence", "mutual pleasure", "healthy sex life", "kink-friendly", "spontaneity",
+
+    // Personal Space & Boundaries
+    "personal space", "alone time", "solitude", "self-reflection", "privacy", 
+    "independence", "emotional space", "mental clarity", "breathing room", "autonomy", 
+    "energy protection", "safe distance", "self-prioritization", "respect my space", 
+    "headspace", "vibe check", "no-drama zone", "low-energy days", "protect your peace"
+];
+
 
   const isValidPrompt = (input: string): boolean => {
     const lowercasedInput = input.toLowerCase();
